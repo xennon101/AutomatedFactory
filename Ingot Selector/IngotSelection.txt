@@ -1,0 +1,58 @@
+alias vending d0
+alias stacker d1
+alias sorter d2
+alias typeMem d3
+alias quanMem d4
+
+alias type r0
+alias quantity r1
+alias stackerImport r2
+alias stackerQuantity r3
+alias vendingExport r4
+alias sorterExport r5
+
+s stacker Mode 0
+s sorter Mode 2
+
+waitActive:
+yield
+l type typeMem Setting
+beq type 0 waitActive
+beq type -1 waitActive
+l quantity quanMem Setting
+beq quantity 0 waitActive
+s stacker Setting 500
+vend:
+s vending ClearMemory 1
+s stacker ClearMemory 1
+s vending RequestHash type
+sleep 2
+yield
+l vendingExport vending ExportCount
+beq vendingExport 0 error
+stackerWaitIngot:
+yield
+l stackerImport stacker ImportCount
+beq stackerImport 0 stackerWaitIngot
+yield
+ls stackerQuantity stacker 2 Quantity
+blt stackerQuantity quantity vend
+s sorter ClearMemory 1
+s sorter Output 0
+s stacker Setting quantity
+yield
+s stacker Setting 500
+sorterWaitIngot:
+yield
+l sorterExport sorter ExportCount
+beq sorterExport 0 sorterWaitIngot
+s sorter Output 1
+s stacker Activate 1
+yield
+s typeMem Setting 0
+j waitActive
+error:
+s typeMem Setting -1
+s sorter Output 1
+s stacker Activate 1
+j waitActive

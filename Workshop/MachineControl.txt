@@ -1,0 +1,127 @@
+alias machine d0
+alias activateButton d1
+alias quantityDial d2
+alias machineMem d3
+alias typeMem d4
+alias quantityMem d5
+alias ID r0
+alias recipe r1
+alias activate r2
+alias quantity r3
+alias type r4
+alias reagents r5
+move ID 1
+waitActive:
+yield
+s machine Open 0
+l activate activateButton Setting
+l reagents machine Reagents
+bgt reagents 0 waitActive
+beq activate 0 waitActive
+s machine Open 1
+s machineMem Setting ID
+l quantity quantityDial Setting
+lr recipe machine Recipe Copper
+breq recipe 0 4
+push -404336834
+mul recipe recipe quantity
+push recipe
+lr recipe machine Recipe Gold
+breq recipe 0 4
+push 226410516
+mul recipe recipe quantity
+push recipe
+lr recipe machine Recipe Iron
+breq recipe 0 4
+push -1301215609
+mul recipe recipe quantity
+push recipe
+lr recipe machine Recipe Lead
+breq recipe 0 4
+push 2134647745
+mul recipe recipe quantity
+push recipe
+lr recipe machine Recipe Nickel
+breq recipe 0 4
+push -1406385572
+mul recipe recipe quantity
+push recipe
+lr recipe machine Recipe Silicon
+breq recipe 0 4
+push -290196476
+mul recipe recipe quantity
+push recipe
+lr recipe machine Recipe Silver
+breq recipe 0 4
+push -929742000
+mul recipe recipe quantity
+push recipe
+lr recipe machine Recipe Astroloy
+breq recipe 0 4
+push 412924554
+mul recipe recipe quantity
+push recipe
+lr recipe machine Recipe Constandtan
+breq recipe 0 4
+push 1058547521
+mul recipe recipe quantity
+push recipe
+lr recipe machine Recipe Electrum
+breq recipe 0 4
+push 502280180
+mul recipe recipe quantity
+push recipe
+lr recipe machine Recipe Hastelloy
+breq recipe 0 4
+push 1579842814
+mul recipe recipe quantity
+push recipe
+lr recipe machine Recipe Inconel
+breq recipe 0 4
+push -787796599
+mul recipe recipe quantity
+push recipe
+lr recipe machine Recipe Invar
+breq recipe 0 4
+push -297990285
+mul recipe recipe quantity
+push recipe
+lr recipe machine Recipe Solder
+breq recipe 0 4
+push -82508479)
+mul recipe recipe quantity
+push recipe
+lr recipe machine Recipe Steel
+breq recipe 0 4
+push -654790771
+mul recipe recipe quantity
+push recipe
+lr recipe machine Recipe Stellite
+breq recipe 0 4
+push -1897868623
+mul recipe recipe quantity
+push recipe
+lr recipe machine Recipe Waspaloy
+breq recipe 0 4
+push 156348098
+mul recipe recipe quantity
+push recipe
+popStack:
+pop quantity
+pop type
+s typeMem Setting type
+s quantityMem Setting quantity
+loopStack:
+yield
+l type typeMem Setting
+beq sp 0 end
+beq type -1 clearStack
+beq type 0 popStack
+j loopStack
+clearStack:
+pop quantity
+bgt sp 0 clearStack
+s machine Open 1
+end:
+sleep 10
+j waitActive
