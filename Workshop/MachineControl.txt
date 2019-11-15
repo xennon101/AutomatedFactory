@@ -9,16 +9,16 @@ alias recipe r1
 alias activate r2
 alias quantity r3
 alias type r4
-alias reagents r5
-move ID 1
+alias completion r5
+move ID 1 #change to machine ID
 waitActive:
 yield
-s machine Open 0
 l activate activateButton Setting
-l reagents machine Reagents
-bgt reagents 0 waitActive
+l completion machine CompletionRatio
+bgt completion 2 waitActive
 beq activate 0 waitActive
 s machine Open 1
+s machine ClearMemory 1
 s machineMem Setting ID
 l quantity quantityDial Setting
 lr recipe machine Recipe Copper
@@ -113,6 +113,7 @@ s typeMem Setting type
 s quantityMem Setting quantity
 loopStack:
 yield
+s machine Open 0
 l type typeMem Setting
 beq sp 0 end
 beq type -1 clearStack
@@ -121,7 +122,7 @@ j loopStack
 clearStack:
 pop quantity
 bgt sp 0 clearStack
+sleep 5
 s machine Open 1
 end:
-sleep 10
 j waitActive

@@ -17,8 +17,8 @@ j start
 
 red:
 s light Color 4
-s typeMem Setting 0
 sleep 5
+s typeMem Setting 0
 j start
 
 green:
