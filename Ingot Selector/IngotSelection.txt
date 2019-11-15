@@ -18,6 +18,7 @@ waitActive:
 yield
 l type typeMem Setting
 beq type 0 waitActive
+beq type 1 waitActive
 beq type -1 waitActive
 l quantity quanMem Setting
 beq quantity 0 waitActive
@@ -49,7 +50,7 @@ beq sorterExport 0 sorterWaitIngot
 s sorter Output 1
 s stacker Activate 1
 yield
-s typeMem Setting 0
+s typeMem Setting 1
 j waitActive
 error:
 s typeMem Setting -1

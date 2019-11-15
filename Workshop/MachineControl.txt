@@ -10,7 +10,27 @@ alias activate r2
 alias quantity r3
 alias type r4
 alias completion r5
-move ID 1 #change to machine ID
+alias lineNumber r6
+l ID machine PrefabHash
+start:
+push -404336834
+push 226410516
+push -1301215609
+push 2134647745
+push -1406385572
+push -290196476
+push -929742000
+push 412924554
+push 1058547521
+push 502280180
+push 1579842814
+push -787796599
+push -297990285
+push -82508479
+push -654790771
+push -1897868623
+push 156348098
+move lineNumber -1
 waitActive:
 yield
 l activate activateButton Setting
@@ -21,108 +41,71 @@ s machine Open 1
 s machine ClearMemory 1
 s machineMem Setting ID
 l quantity quantityDial Setting
+popReagent:
+add lineNumber lineNumber 2
+jr lineNumber
 lr recipe machine Recipe Copper
-breq recipe 0 4
-push -404336834
-mul recipe recipe quantity
-push recipe
+j writeRecipe
 lr recipe machine Recipe Gold
-breq recipe 0 4
-push 226410516
-mul recipe recipe quantity
-push recipe
+j writeRecipe
 lr recipe machine Recipe Iron
-breq recipe 0 4
-push -1301215609
-mul recipe recipe quantity
-push recipe
+j writeRecipe
 lr recipe machine Recipe Lead
-breq recipe 0 4
-push 2134647745
-mul recipe recipe quantity
-push recipe
+j writeRecipe
 lr recipe machine Recipe Nickel
-breq recipe 0 4
-push -1406385572
-mul recipe recipe quantity
-push recipe
+j writeRecipe
 lr recipe machine Recipe Silicon
-breq recipe 0 4
-push -290196476
-mul recipe recipe quantity
-push recipe
+j writeRecipe
 lr recipe machine Recipe Silver
-breq recipe 0 4
-push -929742000
-mul recipe recipe quantity
-push recipe
+j writeRecipe
 lr recipe machine Recipe Astroloy
-breq recipe 0 4
-push 412924554
-mul recipe recipe quantity
-push recipe
-lr recipe machine Recipe Constandtan
-breq recipe 0 4
-push 1058547521
-mul recipe recipe quantity
-push recipe
+j writeRecipe
+lr recipe machine Recipe Constantan
+j writeRecipe
 lr recipe machine Recipe Electrum
-breq recipe 0 4
-push 502280180
-mul recipe recipe quantity
-push recipe
+j writeRecipe
 lr recipe machine Recipe Hastelloy
-breq recipe 0 4
-push 1579842814
-mul recipe recipe quantity
-push recipe
+j writeRecipe
 lr recipe machine Recipe Inconel
-breq recipe 0 4
-push -787796599
-mul recipe recipe quantity
-push recipe
+j writeRecipe
 lr recipe machine Recipe Invar
-breq recipe 0 4
-push -297990285
-mul recipe recipe quantity
-push recipe
+j writeRecipe
 lr recipe machine Recipe Solder
-breq recipe 0 4
-push -82508479)
-mul recipe recipe quantity
-push recipe
+j writeRecipe
 lr recipe machine Recipe Steel
-breq recipe 0 4
-push -654790771
-mul recipe recipe quantity
-push recipe
+j writeRecipe
 lr recipe machine Recipe Stellite
-breq recipe 0 4
-push -1897868623
-mul recipe recipe quantity
-push recipe
+j writeRecipe
 lr recipe machine Recipe Waspaloy
-breq recipe 0 4
-push 156348098
+writeRecipe:
 mul recipe recipe quantity
 push recipe
+breq sp 34 2
+j popReagent
 popStack:
+beq sp 17 end
 pop quantity
+sub sp sp 16
 pop type
+add sp sp 17
+beq quantity 0 popStack
 s typeMem Setting type
 s quantityMem Setting quantity
 loopStack:
 yield
 s machine Open 0
 l type typeMem Setting
-beq sp 0 end
-beq type -1 clearStack
-beq type 0 popStack
-j loopStack
-clearStack:
-pop quantity
-bgt sp 0 clearStack
+beq type -1 error
+bne type 1 loopStack
+beq type 1 popStack
+error:
 sleep 5
 s machine Open 1
 end:
-j waitActive
+yield
+l type typeMem Setting
+breq type -1 2
+bne type 1 end
+move sp 0
+s typeMem Setting 0
+j start

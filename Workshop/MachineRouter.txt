@@ -14,11 +14,11 @@ s sorter4 Mode 2
 start:
 yield
 l type machineMem Setting
-beq type 1 machine1
-beq type 2 machine2
-beq type 3 machine3
-beq type 4 machine4
-beq type 5 machine5
+beq type -641491515 machine1
+beq type 336213101 machine2
+beq type 1307165496 machine3
+beq type -465741100 machine4
+beq type -1888248335 machine5
 j start
 machine1:
 s sorter1 Output 1
@@ -40,5 +40,5 @@ s sorter2 Output 1
 j start
 machine5:
 s sorter1 Output 0
-s sorter5 Output 0
+s sorter4 Output 0
 j start
