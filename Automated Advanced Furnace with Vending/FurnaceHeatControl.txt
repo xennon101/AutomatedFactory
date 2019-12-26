@@ -1,7 +1,6 @@
 alias furnace d0
 alias tempMem d1
 alias pressureMem d2
-alias iceFurnace d5
 alias currentTemp r0
 alias currentPressure r1
 alias maxTemp r2
@@ -12,7 +11,6 @@ s furnace On 1
 
 waitActive:
 yield
-s iceFurnace Activate 1
 s furnace SettingInput 0
 l maxTemp tempMem Setting 
 l maxPressure pressureMem Setting 
